@@ -17,7 +17,7 @@ const start = async () => {
 
     app.use('/graphql', bodyParser.json(), graphqlExpress({ 
         context: {mongo},
-        schema 
+        schema
     }));
 
     app.use('/graphiql', graphiqlExpress({ 
