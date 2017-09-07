@@ -17,10 +17,7 @@ const start = async () => {
     var app = express();
 
     const buildOptions = async (req, res) => {
-        // console.log(req);
-        // console.log(mongo);
         const user = await authenticate(req, mongo.Users);
-        // console.log(user);
         return {
             context: {mongo, user},
             schema
