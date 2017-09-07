@@ -8,9 +8,10 @@ module.exports = {
         }
     },
     Mutation: {
-        createLink: async (root, data, {mongo: {Links}}) => {
-            const response = await Links.insert(data);
-            return Object.assign({ id: response.insertedIds[0]}, data);
+        createLink: async (root, data, {mongo: {Links}}, user) => {
+            const newLinks = Object.assign({ postedById: user && user._id}, data);
+            const response = await Links.insert(newLinks);
+            return Object.assign({ id: response.insertedIds[0] }, newLinks);
         },
         createUser: async (root, data, { mongo: {Users}}) => {
             const newUser = {
@@ -29,7 +30,10 @@ module.exports = {
         }
     },
     Link: {
-        id: root => root._id || id
+        id: root => root._id || id,
+        postedBy: async (root, data, {mongo: {Users}}) => {
+            return await Users.findOne({_id: root.postedById});
+        }
     },
     User: {
         id: root => root._id || id
