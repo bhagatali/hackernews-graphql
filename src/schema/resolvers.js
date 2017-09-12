@@ -49,7 +49,10 @@ module.exports = {
         }
     },
     User: {
-        id: root => root._id || id
+        id: root => root._id || id,
+        votes: async ({_id}, data, {mongo: {Votes}}) => {
+            return await Votes.find({userId: _id}).toArray();
+        }
     },
     Vote: {
         id: root => root._id || id,
