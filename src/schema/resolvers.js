@@ -43,6 +43,9 @@ module.exports = {
         id: root => root._id || id,
         postedBy: async (root, data, {mongo: {Users}}) => {
             return await Users.findOne({_id: root.postedById});
+        },
+        votes: async (root, data, {mongo : {Votes}}) => {
+            return await Votes.find({linkId: root._id}).toArray();
         }
     },
     User: {
